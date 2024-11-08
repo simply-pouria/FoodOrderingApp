@@ -3,11 +3,16 @@ import {Stack, useLocalSearchParams} from "expo-router";
 import products from "@assets/data/products";
 import {defaultPizzaImage} from "@components/ProductListItem";
 import { useState } from "react";
+import Button from "@components/Button";
 
 const sizes = ['S', 'M', 'L', 'XL']
 
 
 const ProductDetailPage = () => {
+
+    const addToCart = () => {
+        console.warn("add to cart", selectedSize)
+    }
 
     const [selectedSize, setSelectedSize] = useState('M');
     const {id} = useLocalSearchParams();
@@ -35,7 +40,7 @@ const ProductDetailPage = () => {
                         key={size}
                         style={[styles.size,
                             { backgroundColor: selectedSize === size ? 'gainsboro': 'white'}]}>
-                        
+
                         <Text style= {[styles.sizeText, { color: selectedSize == size ? 'black' : 'grey'}]}>
                             {size}
                         </Text>
@@ -48,6 +53,8 @@ const ProductDetailPage = () => {
             <Text style={styles.price}>
                 Price: ${product.price}
             </Text>
+
+            <Button onPress={addToCart} text={"Add to Cart"} />
 
         </View>
 
@@ -68,6 +75,7 @@ const styles = StyleSheet.create({
     price: {
         fontWeight: 'bold',
         fontSize: 18,
+        marginBottom: 100
     },
     size: {
         width: 50,
