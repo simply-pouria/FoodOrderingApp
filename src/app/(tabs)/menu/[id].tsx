@@ -1,17 +1,95 @@
-import {View, Text} from "react-native";
+import {View, Text, Image, StyleSheet, Pressable} from "react-native";
 import {Stack, useLocalSearchParams} from "expo-router";
+import products from "@assets/data/products";
+import {defaultPizzaImage} from "@components/ProductListItem";
+import { useState } from "react";
+
+const sizes = ['S', 'M', 'L', 'XL']
+
 
 const ProductDetailPage = () => {
+
+    const [selectedSize, setSelectedSize] = useState('M');
     const {id} = useLocalSearchParams();
+    const product = products.find((p) => p.id.toString() === id);
+
+    if (!product) {
+        return <Text>Product Not Found</Text>
+    }
 
     return (
-        <View>
-            <Text>
-                {id}
-                <Stack.Screen options={{ title: 'Details' + id}} />
+        <View style={styles.container}>
+            <Image source={{uri: product.image || defaultPizzaImage}}
+                   style={styles.image}/>
+            <Stack.Screen options={{title: product.name}}/>
+
+            <Text>Select Size</Text>
+
+            <View style={styles.sizes}>
+
+                {sizes.map((size) => (
+                    <Pressable
+                        onPress = {() => {
+                            setSelectedSize(size);
+                        }}
+                        key={size}
+                        style={[styles.size,
+                            { backgroundColor: selectedSize === size ? 'gainsboro': 'white'}]}>
+                        
+                        <Text style= {[styles.sizeText, { color: selectedSize == size ? 'black' : 'grey'}]}>
+                            {size}
+                        </Text>
+
+                    </Pressable>
+                ))}
+            </View>
+
+
+            <Text style={styles.price}>
+                Price: ${product.price}
             </Text>
+
         </View>
+
+
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'white',
+        flex: 1,
+        padding: 10,
+    },
+    image: {
+        width: '100%',
+        aspectRatio: 1,
+    },
+    price: {
+        fontWeight: 'bold',
+        fontSize: 18,
+    },
+    size: {
+        width: 50,
+        aspectRatio: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 25,
+
+    },
+    sizeText: {
+        fontSize: 20,
+        fontWeight: '500',
+
+
+    },
+    sizes: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginVertical: 10
+
+
+    },
+});
 
 export default ProductDetailPage;
