@@ -2,21 +2,30 @@ import {View, Text, Image, StyleSheet, Pressable} from "react-native";
 import {Stack, useLocalSearchParams} from "expo-router";
 import products from "@assets/data/products";
 import {defaultPizzaImage} from "@components/ProductListItem";
-import { useState } from "react";
+import {useState} from "react";
 import Button from "@components/Button";
+import {useCart} from "@/providers/CartProvider";
+import {PizzaSize} from "@/types";
 
-const sizes = ['S', 'M', 'L', 'XL']
+
+const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL']
 
 
 const ProductDetailPage = () => {
 
-    const addToCart = () => {
-        console.warn("add to cart", selectedSize)
-    }
-
-    const [selectedSize, setSelectedSize] = useState('M');
     const {id} = useLocalSearchParams();
+    const { addItem } = useCart();
+
+    const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
+
     const product = products.find((p) => p.id.toString() === id);
+
+    const addToCart = () => {
+        if (!product) {
+            return;
+        }
+        addItem(product, selectedSize);
+    }
 
     if (!product) {
         return <Text>Product Not Found</Text>
@@ -34,14 +43,14 @@ const ProductDetailPage = () => {
 
                 {sizes.map((size) => (
                     <Pressable
-                        onPress = {() => {
+                        onPress={() => {
                             setSelectedSize(size);
                         }}
                         key={size}
                         style={[styles.size,
-                            { backgroundColor: selectedSize === size ? 'gainsboro': 'white'}]}>
+                            {backgroundColor: selectedSize === size ? 'gainsboro' : 'white'}]}>
 
-                        <Text style= {[styles.sizeText, { color: selectedSize == size ? 'black' : 'grey'}]}>
+                        <Text style={[styles.sizeText, {color: selectedSize == size ? 'black' : 'grey'}]}>
                             {size}
                         </Text>
 
@@ -54,7 +63,7 @@ const ProductDetailPage = () => {
                 Price: ${product.price}
             </Text>
 
-            <Button onPress={addToCart} text={"Add to Cart"} />
+            <Button onPress={addToCart} text={"Add to Cart"}/>
 
         </View>
 
