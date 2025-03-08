@@ -23,8 +23,7 @@ const ProductDetailPage = () => {
     const addToCart = () => {
         if (!product) {
             return;
-        }
-        addItem(product, selectedSize);
+        }        addItem(product, selectedSize);
     }
 
     if (!product) {

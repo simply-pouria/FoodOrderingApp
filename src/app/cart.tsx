@@ -4,8 +4,9 @@ import {useCart} from "@/providers/CartProvider";
 
 
 
-const CartScreen = () => {
+export default function CartScreen() {
     const {items} = useCart();
+    console.log("this is running man");
     return (
         <View>
             <Text>
@@ -16,4 +17,3 @@ const CartScreen = () => {
     )
 };
 
-export default CartScreen
