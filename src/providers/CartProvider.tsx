@@ -1,6 +1,6 @@
 import {createContext, PropsWithChildren, useContext, useState} from "react";
 import {CartItem, Product} from "@/types";
-import items from "ajv/lib/vocabularies/applicator/items";
+
 
 type CartType = {
     items: CartItem[];
