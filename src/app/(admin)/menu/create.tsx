@@ -39,7 +39,7 @@ const CreateScreen = () => {
         if (isUpdating){
             onUpdateCreate();
         } else {
-            onUpdateCreate();
+            onCreate();
         }
     }
 
@@ -133,7 +133,7 @@ const CreateScreen = () => {
             />
             <Text style={styles.error}>{errors}</Text>
             <Button onPress={onSubmit} text={isUpdating ? 'Update'  : 'Create'} />
-            {isUpdating && <Text onPress={confirmDelete} style={styles.textButton}>Delete</Text>}
+            {isUpdating && (<Text onPress={confirmDelete} style={styles.textButton}>Delete</Text>)}
         </View>
     );
 };
