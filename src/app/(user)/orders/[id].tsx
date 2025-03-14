@@ -1,10 +1,11 @@
 import dayjs from "dayjs";
 
-;import {View, Text, Image, StyleSheet, Pressable} from "react-native";
+;import {View, Text, Image, StyleSheet, Pressable, FlatList} from "react-native";
 import {Stack, useLocalSearchParams, useNavigation} from "expo-router";
 import React from "react";
 import orders from '@assets/data/orders'
 import {Order} from "@/types";
+import OrderItemListItem from "@components/OrderItemListItem";
 
 
 const OrderDetailPage = () => {
@@ -40,8 +41,8 @@ const OrderDetailPage = () => {
                 </View>
             </View>
 
+        <FlatList data={order.order_items} renderItem={({item}) => <OrderItemListItem orderItem={item}/>}/>
 
-            
         </View>
 
            );
