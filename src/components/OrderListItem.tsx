@@ -10,9 +10,10 @@ type OrderListItemProps = {
 
 const OrderListItem = ({order}: OrderListItemProps) => {
     const orderTime = dayjs(order.created_at).format('YYYY-MM-DD HH:mm:ss');
+    const segments = useSegments();
 
     return (
-        <Link href={`/(user)/orders/${order.id}`as any} asChild={true}>
+        <Link href={`/${segments[0]}/orders/${order.id}`as any} asChild={true}>
             <Pressable style={styles.container}>
                 <View style={styles.leftContainer}>
                     <Text style={styles.title}>
