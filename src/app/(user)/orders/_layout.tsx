@@ -1,18 +1,5 @@
-import { Stack } from 'expo-router';
+import {  Stack } from 'expo-router';
 
-export default function OrdersLayout() {
-    return (
-        <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen
-                name="index"
-                options={{
-                    headerTitle: "Orders"
-                }}
-            />
-        </Stack>
-    );
+export default function AuthLayout() {
+    return <Stack />;
 };
-
-
-
-

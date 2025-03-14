@@ -1,14 +1,17 @@
 import orders from '@assets/data/orders'
 import OrderListItem from "@components/OrderListItem";
 import {FlatList} from "react-native";
+import {Stack} from "expo-router";
+import React from "react";
+import {View} from "react-native"
 
 export default function OrdersScreen() {
     return (
-        <FlatList
-            data={orders}
-            renderItem={({item}) => <OrderListItem order={item}/>}
-        />
-
-
-    )
-}
+        <View>
+            <Stack.Screen options={{title: "Orders"}}/>
+            <FlatList
+                data={orders}
+                renderItem={({item}) => <OrderListItem order={item}/>}/>
+        </View>
+    );
+};
