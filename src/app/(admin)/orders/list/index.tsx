@@ -8,7 +8,7 @@ import {View} from "react-native"
 export default function OrdersScreen() {
     return (
         <View>
-            <Stack.Screen options={{title: "Orders"}}/>
+            <Stack.Screen options={{title: "Active"}}/>
             <FlatList
                 data={orders}
                 renderItem={({item}) => <OrderListItem order={item}/>}/>
