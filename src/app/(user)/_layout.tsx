@@ -25,7 +25,7 @@ export default function TabLayout() {
             <Redirect href={'/'} />
         );
     }
-    
+
     return (
         <Tabs
             screenOptions={{
