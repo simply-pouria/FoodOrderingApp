@@ -3,6 +3,7 @@ import {supabase} from "@/lib/supabase";
 import constantsServer from "expo-constants/src/Constants.server";
 import {Session} from "@supabase/auth-js";
 
+
 type AuthData = {
     session: Session | null;
     profile: any;
@@ -43,6 +44,7 @@ export function AuthProvider({ children }: PropsWithChildren<AuthData>) {
 
             setLoading(false);
         };
+
         fetchSession();
 
         supabase.auth.onAuthStateChange((_event, session) => {
@@ -51,6 +53,7 @@ export function AuthProvider({ children }: PropsWithChildren<AuthData>) {
     }, []);
 
 
+    // @ts-ignore
     return <AuthContext.Provider value={{session, loading, profile, isAdmin: profile?.group == "ADMIN"}}>{children}</AuthContext.Provider>;}
 
 export const useAuth = () => useContext(AuthContext);

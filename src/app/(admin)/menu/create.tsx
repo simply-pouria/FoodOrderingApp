@@ -5,6 +5,7 @@ import Colors from '../../../constants/Colors';
 import Button from '../../../components/Button';
 import * as ImagePicker from 'expo-image-picker';
 import {Stack, useLocalSearchParams, useRouter} from 'expo-router';
+import {useInsertProduct, useUpdateProduct} from "@/api/products";
 
 const CreateScreen = () => {
     const [image, setImage] = useState<string | null>(null);
@@ -14,8 +15,12 @@ const CreateScreen = () => {
 
     const router = useRouter();
 
-    const {id} = useLocalSearchParams();
+    const {id: idString } = useLocalSearchParams();
+    const id = parseFloat(typeof idString == 'string'? idString : idString[0]);
     const isUpdating = !!id
+
+    const { mutate: insertProduct} = useInsertProduct()
+    const { mutate: updateProduct} = useUpdateProduct()
 
 
     const validateInput = () => {
@@ -48,23 +53,36 @@ const CreateScreen = () => {
             return;
         }
 
-        console.warn('Creating product', name);
-        setName('');
-        setPrice('');
-        setImage('');
-        router.back();
+
+        insertProduct({name, price: parseFloat(price), image}, {
+            onSuccess: () => {
+                console.warn('Creating product', name);
+                setName('');
+                setPrice('');
+                setImage('');
+                router.back();
+
+            }
+        })
+
     };
 
     const onUpdateCreate = () => {
         if (!validateInput()) {
             return;
         }
+        updateProduct({id, name, price: parseFloat(price), image}, {
 
-        console.warn('Updating product', name);
-        setName('');
-        setPrice('');
-        setImage('');
-        router.back();
+            onSuccess: () => {
+                console.warn('Updating product', name);
+                setName('');
+                setPrice('');
+                setImage('');
+                router.back();
+            },
+        })
+
+
     };
 
     const pickImage = async () => {
